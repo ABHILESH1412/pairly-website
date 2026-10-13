@@ -62,8 +62,8 @@ export default function Download() {
   };
 
   usePageAnim(() => root, () => {
-    gsap.from('.dl-tab', { y: 30, autoAlpha: 0, stagger: 0.07, duration: 0.8, delay: 0.5 });
-    gsap.from('.dl-panel', { y: 50, autoAlpha: 0, duration: 1, delay: 0.7 });
+    gsap.from('.dl-tab', { y: 30, autoAlpha: 0, stagger: 0.07, duration: 0.8, delay: 0.5, clearProps: 'transform' });
+    gsap.from('.dl-panel', { y: 50, autoAlpha: 0, duration: 1, delay: 0.7, clearProps: 'transform' });
   });
 
   return (

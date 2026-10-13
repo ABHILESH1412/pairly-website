@@ -23,4 +23,4 @@ export function scrollToTop() {
 
 export { gsap, ScrollTrigger, SplitText };
 
-if (import.meta.env.DEV) (window as unknown as { lenis: Lenis }).lenis = lenis;
+if (import.meta.env.DEV) Object.assign(window, { lenis, gsap, ScrollTrigger });

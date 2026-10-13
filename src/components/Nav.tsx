@@ -5,6 +5,7 @@ import { gsap, lenis } from '../lib/gsap';
 import { latest, REPO_URL } from '../lib/release';
 import { LogoMark } from './Logo';
 import { GitHubIcon } from './BrandIcons';
+import ThemeToggle from './ThemeToggle';
 
 export const NAV_LINKS = [
   { href: '/features', label: 'Features' },
@@ -94,6 +95,7 @@ export default function Nav(props: { current: string }) {
           </nav>
 
           <div class="nav-actions">
+            <ThemeToggle class="nav-theme" />
             <a class="icon-btn" href={REPO_URL} target="_blank" rel="noopener" aria-label="Pairly on GitHub">
               <GitHubIcon size={20} />
             </a>
@@ -122,6 +124,7 @@ export default function Nav(props: { current: string }) {
             )}
           </For>
         </nav>
+        <ThemeToggle class="m-theme" labels />
         <a class="m-link m-gh" href={REPO_URL} target="_blank" rel="noopener">
           <GitHubIcon size={18} /> View on GitHub
         </a>

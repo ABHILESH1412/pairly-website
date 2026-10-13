@@ -23,6 +23,83 @@
   --mono: 'JetBrains Mono Variable', ui-monospace, monospace;
   --radius: 22px;
   --gutter: clamp(16px, 4vw, 40px);
+  --nav-bg: rgba(12, 12, 23, 0.65);
+  --menu-bg: radial-gradient(120% 80% at 100% 0%, #1b1640 0%, #07070d 60%);
+  --grid-line: rgba(255, 255, 255, 0.045);
+  --outline-stroke: rgba(185, 198, 255, 0.55);
+  --float-bg: rgba(22, 22, 40, 0.85);
+  --float-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.7);
+  --ghost-stroke: rgba(255, 255, 255, 0.1);
+  --num-stroke: rgba(138, 180, 255, 0.28);
+  --track: rgba(255, 255, 255, 0.08);
+  --badge-bg: #12122a;
+  --android: #7ee6a1;
+  --windows: #7cc4ff;
+  --linux: #ffd27a;
+  --cta-grad: linear-gradient(180deg, #fff 30%, rgba(185, 198, 255, 0.5));
+  --footer-word: linear-gradient(180deg, rgba(185, 198, 255, 0.16), rgba(185, 198, 255, 0));
+  --notice-text: #ffe3b5;
+  --tx-ink: #0a0a14;
+  --tx-stroke: #fff;
+  --noise: 0.05;
+  --blob-opacity: 1;
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #f7f7fc;
+  --bg-2: #ffffff;
+  --surface: rgba(30, 30, 90, 0.035);
+  --surface-2: rgba(30, 30, 90, 0.065);
+  --border: rgba(30, 30, 90, 0.1);
+  --border-2: rgba(30, 30, 90, 0.17);
+  --text: #12122a;
+  --muted: #54536f;
+  --dim: #85849f;
+  --brand-3: #4743d1;
+  --sky: #3654f5;
+  --lilac: #7b3fe4;
+  --good: #0c9a68;
+  --warn: #b26b00;
+  --bad: #d23a52;
+  --grad-text: linear-gradient(100deg, #3654f5 0%, #6a3ff0 50%, #a13ddf 100%);
+  --nav-bg: rgba(255, 255, 255, 0.72);
+  --menu-bg: radial-gradient(120% 80% at 100% 0%, #e2dfff 0%, #f7f7fc 60%);
+  --grid-line: rgba(30, 30, 90, 0.06);
+  --outline-stroke: rgba(71, 67, 209, 0.45);
+  --float-bg: rgba(255, 255, 255, 0.94);
+  --float-shadow: 0 12px 30px -12px rgba(40, 40, 110, 0.28);
+  --ghost-stroke: rgba(30, 30, 90, 0.12);
+  --num-stroke: rgba(54, 84, 245, 0.25);
+  --track: rgba(30, 30, 90, 0.08);
+  --badge-bg: #ffffff;
+  --android: #16a34a;
+  --windows: #0b6fd0;
+  --linux: #b7791f;
+  --cta-grad: linear-gradient(180deg, #12122a 30%, rgba(71, 67, 209, 0.6));
+  --footer-word: linear-gradient(180deg, rgba(71, 67, 209, 0.13), rgba(71, 67, 209, 0));
+  --notice-text: #7a4b00;
+  --tx-ink: #f3f3fa;
+  --tx-stroke: #12122a;
+  --noise: 0.03;
+  --blob-opacity: 0.45;
+  color-scheme: light;
+}
+
+/* The device mock-up and code blocks stay dark in both themes, like product shots. */
+:root[data-theme='light'] :is(.scene, .code) {
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-2: rgba(255, 255, 255, 0.14);
+  --text: #eeedff;
+  --muted: #9897b8;
+  --dim: #6b6a8a;
+  --brand-3: #b9c6ff;
+  --sky: #8ab4ff;
+  --lilac: #b48cff;
+  --good: #5ee6a8;
+  color: var(--text);
   color-scheme: dark;
 }
 
@@ -55,7 +132,7 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 900;
-  opacity: 0.05;
+  opacity: var(--noise);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -164,7 +241,7 @@ p {
 .chip-glow {
   background: rgba(79, 107, 255, 0.18);
   border-color: rgba(138, 180, 255, 0.4);
-  color: #dfe5ff;
+  color: var(--text);
 }
 
 .text-link {
@@ -293,6 +370,72 @@ p {
   border-color: var(--border-2);
 }
 
+/* ---------- Theme switch ---------- */
+
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.theme-toggle button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 32px;
+  min-width: 34px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.theme-toggle button:hover,
+.theme-toggle button.active {
+  color: var(--text);
+}
+
+.tt-pill {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  border-radius: 999px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  box-shadow: 0 4px 14px -6px rgba(20, 20, 60, 0.35);
+}
+
+.m-theme {
+  align-self: flex-start;
+}
+
+.m-theme button {
+  height: 38px;
+  padding: 0 14px;
+}
+
+/* The new theme grows out of the switch as a circle (see setPref in src/lib/theme.ts). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
 /* ---------- Transition overlay ---------- */
 
 .tx {
@@ -320,7 +463,7 @@ p {
 }
 
 .tx-cols--ink > div {
-  background: #0a0a14;
+  background: var(--tx-ink);
 }
 
 .tx-center::before {
@@ -354,6 +497,18 @@ p {
 .tx-logo svg {
   overflow: visible;
   filter: drop-shadow(0 0 24px rgba(138, 180, 255, 0.45));
+}
+
+.tx-logo path:first-of-type {
+  stroke: var(--tx-stroke);
+}
+
+.tx-logo stop:first-child {
+  stop-color: var(--sky);
+}
+
+.tx-logo stop:last-child {
+  stop-color: var(--lilac);
 }
 
 .tx-pulse {
@@ -446,7 +601,7 @@ p {
 }
 
 .nav--scrolled .nav-inner {
-  background: rgba(12, 12, 23, 0.65);
+  background: var(--nav-bg);
   border-color: var(--border);
   backdrop-filter: blur(18px) saturate(1.4);
 }
@@ -536,7 +691,7 @@ p {
   justify-content: center;
   gap: 40px;
   padding: 110px var(--gutter) 40px;
-  background: radial-gradient(120% 80% at 100% 0%, #1b1640 0%, #07070d 60%);
+  background: var(--menu-bg);
 }
 
 .m-menu nav {
@@ -633,6 +788,7 @@ p {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  opacity: var(--blob-opacity);
 }
 
 .blob {
@@ -685,8 +841,8 @@ p {
 .grid-lines {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 20%, transparent 75%);
 }
@@ -706,7 +862,7 @@ p {
   padding: 7px 14px 7px 10px;
   border-radius: 999px;
   border: 1px solid var(--border-2);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface);
   backdrop-filter: blur(10px);
   font-size: 0.86rem;
   color: var(--muted);
@@ -1327,7 +1483,7 @@ p {
 
 .marquee-track span.outline {
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(185, 198, 255, 0.55);
+  -webkit-text-stroke: 1.5px var(--outline-stroke);
 }
 
 .marquee-track em {
@@ -1353,7 +1509,7 @@ p {
   border: 1px solid var(--border);
   overflow: hidden;
   isolation: isolate;
-  transition: border-color 0.4s, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: border-color 0.4s;
 }
 
 .bento-card::before,
@@ -1462,11 +1618,11 @@ p {
 .notif {
   padding: 12px 14px;
   border-radius: 14px;
-  background: rgba(22, 22, 40, 0.85);
+  background: var(--float-bg);
   border: 1px solid var(--border-2);
   backdrop-filter: blur(10px);
   font-size: 0.82rem;
-  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.7);
+  box-shadow: var(--float-shadow);
 }
 
 .notif:nth-child(2) {
@@ -1559,7 +1715,7 @@ p {
   font-size: 6rem;
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+  -webkit-text-stroke: 1px var(--ghost-stroke);
 }
 
 .link-icon {
@@ -1595,7 +1751,7 @@ p {
   flex: 1;
   height: 6px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--track);
 }
 
 .speed i.on {
@@ -1648,7 +1804,7 @@ p {
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: #12122a;
+  background: var(--badge-bg);
   border: 1px solid rgba(138, 180, 255, 0.35);
   color: var(--brand-3);
   margin-bottom: 28px;
@@ -1753,15 +1909,15 @@ p {
 }
 
 .plat-android .plat-icon {
-  color: #7ee6a1;
+  color: var(--android);
 }
 
 .plat-windows .plat-icon {
-  color: #7cc4ff;
+  color: var(--windows);
 }
 
 .plat-linux .plat-icon {
-  color: #ffd27a;
+  color: var(--linux);
 }
 
 .plat-card h3 {
@@ -1827,7 +1983,7 @@ p {
   font-size: clamp(4.5rem, 17vw, 14rem);
   letter-spacing: -0.06em;
   line-height: 0.9;
-  background: linear-gradient(180deg, #fff 30%, rgba(185, 198, 255, 0.5));
+  background: var(--cta-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -1875,7 +2031,7 @@ p {
   line-height: 0.8;
   letter-spacing: -0.06em;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(138, 180, 255, 0.28);
+  -webkit-text-stroke: 1.5px var(--num-stroke);
   user-select: none;
 }
 
@@ -1979,7 +2135,7 @@ p {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface);
 }
 
 .matrix th svg {
@@ -2031,7 +2187,7 @@ p {
   border-radius: 14px;
   border: 1px solid rgba(255, 197, 107, 0.35);
   background: rgba(255, 197, 107, 0.08);
-  color: #ffe3b5;
+  color: var(--notice-text);
   max-width: 640px;
 }
 
@@ -2083,7 +2239,7 @@ p {
 }
 
 .dl-tab.active svg:first-child {
-  color: #fff;
+  color: var(--text);
 }
 
 .dl-panel {
@@ -2164,7 +2320,7 @@ p {
 }
 
 .inst-step b {
-  color: #fff;
+  color: var(--text);
 }
 
 .code {
@@ -2409,7 +2565,7 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--dim);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface);
 }
 
 .threat .good,
@@ -2533,7 +2689,7 @@ p {
 }
 
 .g-sec b {
-  color: #fff;
+  color: var(--text);
 }
 
 .g-steps {
@@ -2683,7 +2839,7 @@ p {
   width: 70px;
   height: 124px;
   border-radius: 16px;
-  border: 7px solid #fff;
+  border: 7px solid var(--text);
 }
 
 .nf-card.b {
@@ -2756,7 +2912,7 @@ p {
   line-height: 0.8;
   text-align: center;
   margin-top: 50px;
-  background: linear-gradient(180deg, rgba(185, 198, 255, 0.16), rgba(185, 198, 255, 0));
+  background: var(--footer-word);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -2777,6 +2933,14 @@ p {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1080px) {
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-links a {
+    padding: 8px 13px;
+  }
+
   .bento {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2821,7 +2985,8 @@ p {
 
 @media (max-width: 860px) {
   .nav-links,
-  .nav-cta {
+  .nav-cta,
+  .nav-theme {
     display: none;
   }
 
